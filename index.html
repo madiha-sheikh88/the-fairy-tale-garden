@@ -1,14 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>the-fairy-tale-garden | Home | kids magical stories</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    
 
-    <script src="./script.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Fairy Tale Garden | A Magical Adventure | kids stories</title>
+
+  <!-- Fonts: Grandstander for titles, Roboto for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+  <noscript>
+    <style>
+      .word,
+      .hero-fairy,
+      .title-after,
+      .scroll-hint {
+        visibility: visible !important;
+      }
+
+      .title-after {
+        opacity: 1 !important;
+      }
+
+      .club-balloon {
+        opacity: 0.9 !important;
+      }
+    </style>
+  </noscript>
+</head>
+
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar">
+
+    <!-- Logo + rainbow title -->
+    <a class="brand" href="#home">
+      <img class="brand-logo" src="./asset/logo.png" alt="The Fairy Tale Garden logo">
+      <span class="brand-title">The Fairy Tale Garden</span>
+    </a>
+
+    <!-- Star menu -->
+    <nav class="nav" id="nav" aria-label="Main">
+      <ul class="star-list">
+
+        <li class="star-item star-pink">
+          <a class="star-link" href="#home">
+            <svg class="star-shape" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon class="star-body"
+                points="50,17 60.6,38.4 84.2,41.9 67.1,58.6 71.2,82.1 50,71 28.8,82.1 32.9,58.6 15.8,41.9 39.4,38.4" />
+              <ellipse class="star-shine" cx="46" cy="31" rx="3" ry="6" transform="rotate(-15 46 31)" />
+            </svg>
+            <span class="star-label">Home</span>
+          </a>
+        </li>
+
+        <li class="star-item star-yellow">
+          <a class="star-link" href="./story.html">
+            <svg class="star-shape" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon class="star-body"
+                points="50,17 60.6,38.4 84.2,41.9 67.1,58.6 71.2,82.1 50,71 28.8,82.1 32.9,58.6 15.8,41.9 39.4,38.4" />
+              <ellipse class="star-shine" cx="46" cy="31" rx="3" ry="6" transform="rotate(-15 46 31)" />
+            </svg>
+            <span class="star-label">Story</span>
+          </a>
+        </li>
+
+        <li class="star-item star-mint">
+          <a class="star-link" href="./journal.html">
+            <svg class="star-shape" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon class="star-body"
+                points="50,17 60.6,38.4 84.2,41.9 67.1,58.6 71.2,82.1 50,71 28.8,82.1 32.9,58.6 15.8,41.9 39.4,38.4" />
+              <ellipse class="star-shine" cx="46" cy="31" rx="3" ry="6" transform="rotate(-15 46 31)" />
+            </svg>
+            <span class="star-label">Journal</span>
+          </a>
+        </li>
+
+        <li class="star-item star-purple">
+          <a class="star-link" href="./club.html">
+            <svg class="star-shape" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon class="star-body"
+                points="50,17 60.6,38.4 84.2,41.9 67.1,58.6 71.2,82.1 50,71 28.8,82.1 32.9,58.6 15.8,41.9 39.4,38.4" />
+              <ellipse class="star-shine" cx="46" cy="31" rx="3" ry="6" transform="rotate(-15 46 31)" />
+            </svg>
+            <span class="star-label">Story<br>Club</span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <!-- Right corner: menu button (phones only) + music button -->
+    <div class="actions">
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="nav"
+        aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="music-wrap">
+        <button class="music-btn" id="musicBtn" type="button" aria-label="Play background music" title="Music on / off">
+          <svg class="music-char" viewBox="0 0 64 64" aria-hidden="true">
+            <!-- note stem and flag -->
+            <path d="M42 12 V42" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" />
+            <path d="M42 12 C50 14 54 20 52 28" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" />
+            <!-- face -->
+            <circle cx="30" cy="44" r="15" fill="#fff0a3" stroke="#fff" stroke-width="3" />
+            <circle cx="21" cy="48" r="3.2" fill="#ff9ecb" />
+            <circle cx="39" cy="48" r="3.2" fill="#ff9ecb" />
+            <!-- awake: open eyes and smile (shown while music plays) -->
+            <g class="eyes-open">
+              <circle cx="25" cy="41" r="2.8" fill="#35205f" />
+              <circle cx="35" cy="41" r="2.8" fill="#35205f" />
+              <circle cx="26" cy="40" r="0.9" fill="#fff" />
+              <circle cx="36" cy="40" r="0.9" fill="#fff" />
+            </g>
+            <path class="mouth-happy" d="M24.5 47 Q30 56 35.5 47 Z" fill="#ff6f9f" stroke="#35205f" stroke-width="1.6"
+              stroke-linejoin="round" />
+            <!-- asleep: closed eyes, small mouth and zzz (shown while muted) -->
+            <g class="eyes-closed" fill="none" stroke="#35205f" stroke-width="2" stroke-linecap="round">
+              <path d="M22 41 Q25 44 28 41" />
+              <path d="M32 41 Q35 44 38 41" />
+            </g>
+            <ellipse class="mouth-sleep" cx="30" cy="50" rx="2.4" ry="2" fill="#35205f" />
+            <g class="zzz" font-family="Grandstander, cursive" font-weight="800" fill="#fff">
+              <text x="4" y="24" font-size="9">z</text>
+              <text x="11" y="17" font-size="11">Z</text>
+            </g>
+          </svg>
+        </button>
+        <div class="music-notes" id="musicNotes" aria-hidden="true"></div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===================== PAGE SECTIONS ===================== -->
+  <main>
+
+    <!-- HERO: pastel sky, bouncing heading, fairy and typed tagline -->
+    <section class="hero" id="home">
+      <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+      <div class="hero-blob hero-blob-3"></div>
+
+      <div class="hero-inner">
+        <div class="hero-fairy" id="heroFairy">
+          <img class="fairy-img" src="./asset/fairy-with-magic-wand.png"
+            alt="A smiling fairy in a lilac dress waving a sparkling magic wand">
+          <!-- invisible point on the wand's star; the rotating glow sits here -->
+          <div class="wand-glow" id="wandTip" aria-hidden="true">
+            <svg class="wand-rays" viewBox="-50 -50 100 100">
+              <path d="M0,-46 L7,-7 L46,0 L7,7 L0,46 L-7,7 L-46,0 L-7,-7 Z" fill="#fff8c9" />
+              <path d="M0,-30 L5,-5 L30,0 L5,5 L0,30 L-5,5 L-30,0 L-5,-5 Z" fill="#fff" transform="rotate(45)" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="hero-text">
+          <h1 class="hero-title" id="heroTitle">
+            <span class="word">Welcome</span>
+            <span class="word">to</span>
+            <span class="word">the</span>
+            <span class="word">Fairy</span>
+            <span class="word">Tale</span>
+            <span class="word">Garden!</span>
+          </h1>
+          <p class="hero-tagline" id="heroTagline">Where every page sparkles, every dream takes flight, and magical
+            stories grow like flowers!</p>
+        </div>
+      </div>
+
+      <!-- appears after the fairy casts her spell -->
+      <div class="scroll-hint" id="scrollHint" aria-hidden="true"><span>Follow the magic</span><b>&darr;</b></div>
+
+      <svg class="hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,64 C240,120 480,0 720,48 C960,96 1200,16 1440,64 L1440,120 L0,120 Z" fill="#1b1540" />
+      </svg>
+    </section>
+
+    <!-- STORY: navy first; the magic turns the pumpkin into a golden carriage.
+         The first heading stays; the second heading appears BELOW the carriage. -->
+    <section class="scene" id="story">
+      <div class="scene-bg" aria-hidden="true"></div>
+      <div class="scene-inner">
+        <h2 class="scene-title title-before">Just an ordinary pumpkin&hellip;</h2>
+        <div class="pumpkin-stage" id="pumpkinStage">
+          <img class="stage-pumpkin" id="pumpkinImg" src="./asset/pumpkin.png" alt="An orange pumpkin">
+          <img class="stage-carriage" id="carriageImg" src="./asset/magical-pumpkin-carriage.png"
+            alt="A golden magical pumpkin carriage">
+        </div>
+        <h2 class="scene-title title-after">&hellip;until a little magic touched it!</h2>
+      </div>
+      <svg class="scene-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,40 C240,0 480,100 720,56 C960,12 1200,96 1440,48 L1440,120 L0,120 Z" fill="#1b1540" />
+      </svg>
+    </section>
+
+    <!-- STORIES: dark navy gradient, hanging lights and three glowing story cards. -->
+    <section class="stories" id="stories">
+      <div class="stories-stars" id="storyStars" aria-hidden="true"></div>
+      <div class="stories-inner">
+        <h2 class="stories-title">Pick a Magical Story</h2>
+        <p class="stories-sub">Little lanterns of wonder are waiting. Which one will you open tonight?</p>
+        <div class="card-row">
+          <div class="card-col" data-col>
+            <div class="card-hang">
+              <span class="card-string card-string-l" aria-hidden="true"></span>
+              <span class="card-string card-string-r" aria-hidden="true"></span>
+              <article class="story-card card-pink">
+                <div class="card-art">
+                <img src="./asset/33435513-8020-497b-b427-24de4dbd8144.jpeg" alt="Story 1 picture">
+                </div>
+                <h3 class="card-title">House of the Dragon</h3>
+                <p class="card-desc">A short story about a mysterious dragon's house</p>
+                <a class="card-btn" href="./story.html">Read story</a>
+              </article>
+            </div>
+          </div>
+          <div class="card-col" data-col>
+            <div class="card-hang">
+              <span class="card-string card-string-l" aria-hidden="true"></span>
+              <span class="card-string card-string-r" aria-hidden="true"></span>
+              <article class="story-card card-mint">
+                <div class="card-art">
+                  <img src="./asset/1d90cf8e-1b46-4a54-9c75-183432e7a6ac.jpeg" alt="Story 2 picture">
+                </div>
+                <h3 class="card-title">Moonlight Princess</h3>
+                <p class="card-desc">The Moonlight Princess is a magical fairy-tale character who brings light, hope,
+                  and glowing wonder to the night.</p>
+                <a class="card-btn" href="./story.html">Read story</a>
+              </article>
+            </div>
+          </div>
+          <div class="card-col" data-col>
+            <div class="card-hang">
+              <span class="card-string card-string-l" aria-hidden="true"></span>
+              <span class="card-string card-string-r" aria-hidden="true"></span>
+              <article class="story-card card-purple">
+                <div class="card-art">
+                <img src="./asset/f6fabd9d-a9f9-4519-ae44-fe62a5dab79b.jpeg" alt="Story 3 picture">
+                </div>
+                <h3 class="card-title">The Enchanted Fairy</h3>
+                <p class="card-desc">A story that follows a kind-hearted fairy who uses her mystical powers to spread joy.</p>
+                <a class="card-btn" href="./story.html">Read story</a>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- STORY CLUB: hero-style sky. Balloon drifts down in the background, two clouds float one below the other -->
+    <section class="club" id="club">
+      <div class="club-bg" aria-hidden="true"></div>
+      <div class="club-sky" id="clubSky" aria-hidden="true">
+        <img class="club-balloon" id="clubBalloon" src="./asset/floating-balloon.png" alt="">
+        <img class="club-cloud club-cloud-a" id="cloudA" src="./asset/cloud.png" alt="">
+        <img class="club-cloud club-cloud-b" id="cloudB" src="./asset/cloud2.png" alt="">
+      </div>
+
+      <div class="club-inner">
+        <h2 class="club-title" id="clubTitle">
+          <span class="cword">Join</span> <span class="cword">the</span> <span class="cword">Story</span> <span
+            class="cword">Club!</span>
+        </h2>
+        <p class="club-tagline">A cosy little club where children listen, imagine, draw and tell their very own tales.
+        </p>
+
+        <ul class="club-perks">
+          <li class="perk perk-pink">
+            <span class="perk-icon" aria-hidden="true">&#128214;</span>
+            <h3>Story Time</h3>
+            <p>A new fairy tale read aloud every week, with funny voices and surprise endings.</p>
+          </li>
+          <li class="perk perk-blue">
+            <span class="perk-icon" aria-hidden="true">&#127912;</span>
+            <h3>Draw &amp; Share</h3>
+            <p>Draw your favourite scene and show it to new friends in the club gallery.</p>
+          </li>
+          <li class="perk perk-yellow">
+            <span class="perk-icon" aria-hidden="true">&#11088;</span>
+            <h3>Magic Badges</h3>
+            <p>Collect sparkly badges for reading, writing and being a kind story friend.</p>
+          </li>
+        </ul>
+
+        <div class="club-meet">
+          <div class="meet-item"><b>Who</b><span>Ages 4 &ndash; 10</span></div>
+          <div class="meet-item"><b>When</b><span>Every Saturday</span></div>
+          <div class="meet-item"><b>Where</b><span>Online &amp; in the garden</span></div>
+        </div>
+
+        <a class="club-cta" href="./club.html" id="clubCta">Join the club &#10024;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER: night shore, flowing water, sailing boats ===================== -->
+  <footer class="footer" id="footer">
+    <div class="footer-stars" id="footerStars" aria-hidden="true"></div>
+    <div class="footer-moon" aria-hidden="true"></div>
+
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="#home">
+          <img class="brand-logo" src="./asset/logo.png" alt="The Fairy Tale Garden logo">
+          <span class="brand-title">The Fairy Tale Garden</span>
+        </a>
+        <p>Where every page sparkles and every dream takes flight. Sweet stories for little dreamers.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="YouTube">YouTube</a>
+          <a href="#" aria-label="Facebook">Facebook</a>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Explore">
+        <h4>Explore</h4>
+        <a href="#home">Home</a>
+        <a href="./story.html">Stories</a>
+        <a href="./journal.html">Journal</a>
+        <a href="./club.html">Story Club</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="For parents">
+        <h4>For Parents</h4>
+        <a href="#">About us</a>
+        <a href="#">Safe &amp; ad-free</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+
+    <!-- the water: three flowing wave layers, boats sail between them -->
+    <div class="sea" id="sea" aria-hidden="true">
+      <svg class="wave wave-back" viewBox="0 0 2880 200" preserveAspectRatio="none">
+        <path d="M0,60 q180,-50 360,0 t360,0 t360,0 t360,0 t360,0 t360,0 t360,0 t360,0 V200 H0 Z" />
+      </svg>
+      <div class="boat-lane boat-lane-far" id="laneFar"></div>
+      <svg class="wave wave-mid" viewBox="0 0 2880 200" preserveAspectRatio="none">
+        <path d="M0,70 q180,-60 360,0 t360,0 t360,0 t360,0 t360,0 t360,0 t360,0 t360,0 V200 H0 Z" />
+      </svg>
+      <div class="boat-lane boat-lane-near" id="laneNear"></div>
+      <svg class="wave wave-front" viewBox="0 0 2880 200" preserveAspectRatio="none">
+        <path d="M0,80 q180,-45 360,0 t360,0 t360,0 t360,0 t360,0 t360,0 t360,0 t360,0 V200 H0 Z" />
+      </svg>
+    </div>
+    <p class="footer-copy">&copy; <span id="year">2026</span> The Fairy Tale Garden &middot; Made with magic and a
+      sprinkle of stardust</p>
+  </footer>
+
+  <!-- Magic layer: the glowing orb and all sparkles live here (covers the whole page) -->
+  <div class="magic-layer" id="magicLayer" aria-hidden="true">
+    <div class="magic-orb" id="magicOrb">
+      <div class="orb-body">
+        <div class="orb-halo"></div>
+        <div class="orb-core"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GSAP + two of its plugins (scroll + curved paths), then our script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

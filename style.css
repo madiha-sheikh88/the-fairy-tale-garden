@@ -1,0 +1,1146 @@
+/* ============================================================
+   style.css — The Fairy Tale Garden
+   ============================================================ */
+
+/* ---------- 1. VARIABLES ---------- */
+:root {
+  /* fonts (trailing space removed, playful fallback added) */
+  --font-title: 'Grandstander', 'Baloo 2', cursive;
+  --font-body: 'Roboto', system-ui, sans-serif;
+
+  /* your night palette */
+  --bg-night: #1b1540;
+  --bg-panel: #241c52;
+
+  --glow-pink: #ff6fb5;
+  --glow-orange: #ff9e5e;
+  --glow-yellow: #ffe066;
+  --glow-mint: #6dffb3;
+  --glow-cyan: #5ee7ff;
+  --glow-blue: #7aa2ff;
+  --glow-purple: #b388ff;
+
+  --g-sunrise: linear-gradient(90deg, #ff6fb5, #ff9e5e);
+  --g-honey: linear-gradient(90deg, #ff9e5e, #ffe066);
+  --g-meadow: linear-gradient(90deg, #ffe066, #6dffb3);
+  --g-lagoon: linear-gradient(90deg, #6dffb3, #5ee7ff);
+  --g-sky: linear-gradient(90deg, #5ee7ff, #7aa2ff);
+  --g-dream: linear-gradient(90deg, #7aa2ff, #b388ff);
+  --g-candy: linear-gradient(90deg, #b388ff, #ff6fb5);
+
+  /* added: full rainbow (last stop = first stop so it loops smoothly) */
+  --g-rainbow: linear-gradient(90deg, #ff6fb5, #ff9e5e, #ffe066, #6dffb3, #5ee7ff, #7aa2ff, #b388ff, #ff6fb5);
+
+  /* added: soft pastel versions for the stars */
+  --pastel-pink: #ffb7da;
+  --pastel-yellow: #fff0a3;
+  --pastel-mint: #b5ffd9;
+  --pastel-purple: #d6c2ff;
+
+  /* added: dark text colour used inside the stars */
+  --ink: #35205f;
+}
+
+/* ---------- 2. BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 170px; /* keeps section titles clear of the floating navbar */
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg-night);
+  color: #fff;
+  font-family: var(--font-body);
+}
+
+/* ---------- 3. NAVBAR (floating capsule with a moving neon rainbow border) ---------- */
+.navbar {
+  position: fixed;
+  top: 12px;
+  left: clamp(0.5rem, 2vw, 1.5rem);
+  right: clamp(0.5rem, 2vw, 1.5rem);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem clamp(1.4rem, 3vw, 2.6rem);
+  border-radius: 999px; /* capsule */
+}
+
+.navbar::before,
+.navbar::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: var(--g-rainbow);
+  background-size: 200% 100%;
+  animation: neon-flow 6s linear infinite;
+}
+
+/* soft neon glow behind the capsule */
+.navbar::before {
+  inset: -3px;
+  z-index: -2;
+  filter: blur(14px);
+  opacity: 0.75;
+}
+
+/* the capsule: dark panel inside, moving rainbow as the border */
+.navbar::after {
+  inset: 0;
+  z-index: -1;
+  border: 4px solid transparent;
+  background: linear-gradient(var(--bg-panel), var(--bg-panel)) padding-box, var(--g-rainbow) border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation-name: neon-border;
+}
+
+@keyframes neon-flow {
+  from { background-position: 0% 0; }
+  to   { background-position: 200% 0; }
+}
+
+@keyframes neon-border {
+  from { background-position: 0 0, 0% 0; }
+  to   { background-position: 0 0, 200% 0; }
+}
+
+/* ---------- 4. LOGO + RAINBOW TITLE ---------- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 111, 181, 0.55));
+  animation: bob 4s ease-in-out infinite;
+}
+
+.brand-title {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(1.15rem, 2.1vw, 1.9rem);
+  line-height: 1.05;
+  background: var(--g-rainbow);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(255, 158, 94, 0.4));
+  animation: shimmer 9s linear infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 0% 0; }
+  to   { background-position: 200% 0; }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* ---------- 5. STAR MENU ---------- */
+.star-list {
+  display: flex;
+  gap: clamp(0.1rem, 1vw, 0.8rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.star-item { --size: clamp(84px, 7.2vw, 106px); }
+
+.star-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 50%;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+
+.star-link:focus-visible { outline: 3px dashed #fff; outline-offset: -4px; }
+
+/* the star: thick stroke with round joins = soft, chubby corners */
+.star-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 7px var(--glow));
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-body {
+  fill: var(--fill);
+  stroke: var(--fill);
+  stroke-width: 14;
+  stroke-linejoin: round;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+/* little white shine for the cartoon look */
+.star-shine { fill: #fff; opacity: 0.75; }
+
+.star-item:nth-child(2) .star-shape { animation-delay: 0.7s; }
+.star-item:nth-child(3) .star-shape { animation-delay: 1.4s; }
+.star-item:nth-child(4) .star-shape { animation-delay: 2.1s; }
+
+@keyframes twinkle {
+  0%, 100% { filter: drop-shadow(0 0 5px var(--glow)); }
+  50%      { filter: drop-shadow(0 0 14px var(--glow)); }
+}
+
+/* each star: pastel colour, hover colour, glow colour */
+.star-pink   { --fill: var(--pastel-pink);   --hover: var(--glow-orange); --glow: var(--glow-pink); }
+.star-yellow { --fill: var(--pastel-yellow); --hover: var(--glow-mint);   --glow: var(--glow-yellow); }
+.star-mint   { --fill: var(--pastel-mint);   --hover: var(--glow-cyan);   --glow: var(--glow-mint); }
+.star-purple { --fill: var(--pastel-purple); --hover: var(--glow-pink);   --glow: var(--glow-purple); }
+
+/* hover / keyboard focus: colour change + stronger glow */
+.star-link:hover .star-body,
+.star-link:focus-visible .star-body {
+  fill: var(--hover);
+  stroke: var(--hover);
+}
+
+.star-link:hover .star-shape,
+.star-link:focus-visible .star-shape {
+  animation: none;
+  filter: drop-shadow(0 0 12px var(--hover)) drop-shadow(0 0 26px var(--hover));
+}
+
+.star-label {
+  position: relative;
+  z-index: 1;
+  margin-top: 6%;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: calc(var(--size) * 0.125);
+  line-height: 1.05;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ---------- 6. RIGHT CORNER: MUSIC BUTTON ---------- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.music-wrap { position: relative; }
+
+.music-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--g-candy);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25), 0 0 18px var(--glow-purple);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.music-btn:focus-visible { outline: 3px dashed #fff; outline-offset: 4px; }
+
+/* pulsing ring invites a tap while the music is off */
+.music-btn:not(.is-playing)::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 3px solid var(--glow-yellow);
+  border-radius: 50%;
+  animation: ping 1.8s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ping {
+  from { transform: scale(0.95); opacity: 0.9; }
+  to   { transform: scale(1.5);  opacity: 0; }
+}
+
+.music-char { width: 52px; height: 52px; overflow: visible; }
+
+/* muted look (default): asleep */
+.music-btn .eyes-open,
+.music-btn .mouth-happy { display: none; }
+
+/* playing look: awake */
+.music-btn.is-playing .eyes-open,
+.music-btn.is-playing .mouth-happy { display: block; }
+.music-btn.is-playing .eyes-closed,
+.music-btn.is-playing .mouth-sleep,
+.music-btn.is-playing .zzz { display: none; }
+
+.zzz text { animation: zzz 2.4s ease-in-out infinite; }
+.zzz text:nth-child(2) { animation-delay: 0.8s; }
+
+@keyframes zzz {
+  0%   { opacity: 0; transform: translateY(4px); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+/* floating notes spawned by script.js */
+.music-notes {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.float-note {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ---------- 7. MENU BUTTON (phones) ---------- */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: var(--g-dream);
+  box-shadow: 0 0 14px var(--glow-blue);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 26px;
+  height: 4px;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* ---------- 8. PLACEHOLDER SECTIONS ---------- */
+.page {
+  min-height: 70vh;
+  padding: 4rem clamp(1rem, 5vw, 4rem);
+}
+
+.page h2 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.page-home h2    { background-image: var(--g-sunrise); }
+.page-story h2   { background-image: var(--g-meadow); }
+.page-journal h2 { background-image: var(--g-lagoon); }
+.page-club h2    { background-image: var(--g-dream); }
+
+/* ---------- 9. RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .menu-toggle { display: flex; }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.8rem;
+    padding: 1rem 1rem 1.4rem;
+    border: 4px solid transparent;
+    border-radius: 36px;
+    background: linear-gradient(var(--bg-panel), var(--bg-panel)) padding-box, var(--g-rainbow) border-box;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+  }
+
+  .nav.is-open { display: block; }
+
+  .star-list { flex-wrap: wrap; justify-content: center; gap: 0.4rem; }
+  .star-item { --size: 96px; }
+}
+
+@media (max-width: 520px) {
+  .brand-logo { width: 52px; height: 52px; }
+  .brand-title { font-size: 1.05rem; }
+  .music-btn { width: 58px; height: 58px; }
+  .music-char { width: 44px; height: 44px; }
+}
+
+/* ============================================================
+   11. HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 100vh;
+  padding: 190px clamp(1rem, 5vw, 4rem) 140px;
+  overflow: hidden;
+  background: #eaf5ff; /* fallback colour while the rainbow picture loads */
+}
+
+/* rainbow picture behind everything in the hero (script.js slowly drifts it) */
+.hero-bg {
+  position: absolute;
+  inset: -4%;
+  background: url("./asset/rainbow-background.avif") center / cover no-repeat;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* soft pastel colour clouds behind everything */
+.hero-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.3; pointer-events: none; }
+.hero-blob-1 { width: 420px; height: 420px; left: -100px; top: 12%; background: #ffd6ec; }
+.hero-blob-2 { width: 480px; height: 480px; right: -120px; top: 30%; background: #d3e6ff; }
+.hero-blob-3 { width: 360px; height: 360px; left: 35%; bottom: -120px; background: #fff3b8; }
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 4rem);
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+/* fairy (left) */
+.hero-fairy {
+  position: relative;
+  justify-self: center;
+  width: clamp(240px, 34vw, 470px);
+  visibility: hidden; /* script.js reveals her after the heading */
+  transform-origin: 50% 90%;
+  will-change: transform;
+}
+
+.fairy-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 18px rgba(120, 90, 200, 0.25));
+}
+
+/* invisible point sitting on the wand's star (position measured on the picture) */
+.wand-glow {
+  --ray: clamp(60px, 7vw, 100px);
+  position: absolute;
+  left: 75.2%;
+  top: 31%;
+  width: 0;
+  height: 0;
+}
+
+.wand-rays {
+  position: absolute;
+  left: calc(var(--ray) / -2);
+  top: calc(var(--ray) / -2);
+  width: var(--ray);
+  height: var(--ray);
+  overflow: visible;
+  filter: drop-shadow(0 0 8px #ffd23f) drop-shadow(0 0 18px rgba(255, 210, 63, 0.9));
+  opacity: 0.9;
+}
+
+/* heading + tagline (right) */
+.hero-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.05em 0.3em;
+  margin: 0 0 1.2rem;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 5.4vw, 5rem);
+  line-height: 1.02;
+}
+
+.word {
+  display: inline-block;
+  visibility: hidden; /* script.js reveals each word when its turn comes */
+  color: var(--w);
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.14em #fff; /* white sticker outline */
+  text-shadow: 0 0.06em 0 rgba(53, 32, 95, 0.3);
+}
+
+.word:nth-child(1) { --w: #ff5fa8; }
+.word:nth-child(2) { --w: #ff8a3d; }
+.word:nth-child(3) { --w: #9b6bff; }
+.word:nth-child(4) { --w: #3f8cff; }
+.word:nth-child(5) { --w: #17c48a; }
+.word:nth-child(6) { --w: #f5a800; }
+
+.hero-tagline {
+  min-height: 4.2em; /* reserves space so the page doesn't jump while typing */
+  max-width: 34ch;
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.7rem);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+/* blinking pen cursor while typing */
+.hero-tagline.typing::after {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background: var(--glow-pink);
+  animation: caret 0.7s steps(1) infinite;
+}
+
+@keyframes caret { 50% { opacity: 0; } }
+
+/* wavy edge into the navy section */
+.hero-wave {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: clamp(60px, 9vw, 120px);
+  display: block;
+}
+
+/* ============================================================
+   12. MAGIC LAYER (orb, sparks, fog) — covers the whole page
+   ============================================================ */
+body { position: relative; }
+
+.magic-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.magic-orb { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+
+.orb-body { position: absolute; left: 0; top: 0; opacity: 0; }
+
+.orb-halo {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  margin: -65px 0 0 -65px;
+  border-radius: 50%;
+  background: conic-gradient(#ff6fb5, #ff9e5e, #ffe066, #6dffb3, #5ee7ff, #7aa2ff, #b388ff, #ff6fb5);
+  filter: blur(16px);
+  opacity: 0.8;
+}
+
+.orb-core {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #fff6b0 38%, #ffd23f 68%, rgba(255, 210, 63, 0) 74%);
+  box-shadow: 0 0 22px 8px rgba(255, 210, 63, 0.75);
+}
+
+.spark { position: absolute; left: 0; top: 0; line-height: 1; will-change: transform, opacity; }
+.spark-star { text-shadow: 0 0 8px currentColor, 0 0 14px currentColor; }
+.spark-dot { border-radius: 50%; background: currentColor; box-shadow: 0 0 8px 2px currentColor; }
+
+.fog { position: absolute; left: 0; top: 0; border-radius: 50%; will-change: transform, opacity; }
+
+.flash-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border: 5px solid #ffd23f;
+  border-radius: 50%;
+  box-shadow: 0 0 24px #ffd23f, inset 0 0 18px #fff;
+}
+
+/* ============================================================
+   13. PUMPKIN SCENE
+   ============================================================ */
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 125vh;
+  padding: 6rem 1rem;
+  overflow: hidden;
+  background: var(--bg-night); /* plain navy first */
+}
+
+/* rainbow picture fades in once the magic arrives */
+.scene-bg {
+  position: absolute;
+  inset: 0;
+  background: url("./asset/background-pumpkin.jpeg") center / cover no-repeat;
+  opacity: 0;
+}
+
+.scene-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.scene-title {
+  display: grid;
+  max-width: 22ch;
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+/* both headings share one look; script.js changes --fill / --edge / --glow when the background changes */
+.scene-title {
+  --fill: #fff;
+  --edge: rgba(74, 44, 154, 0);
+  --glow: #b388ff;
+  color: var(--fill);
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.12em var(--edge);
+  text-shadow: 0 0 18px var(--glow);
+}
+
+/* second heading sits BELOW the carriage; it is revealed by script.js */
+.title-after { opacity: 0; visibility: hidden; --fill: #fff3a0; --edge: #4a2c9a; --glow: #ffd23f; }
+
+.pumpkin-stage {
+  display: grid;
+  place-items: center;
+  width: min(560px, 86vw);
+  min-height: min(520px, 70vw);
+}
+
+.pumpkin-stage img { grid-area: 1 / 1; height: auto; }
+.stage-pumpkin { width: 46%; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)); }
+.stage-carriage { width: 100%; opacity: 0; }
+
+/* ============================================================
+   14. RESPONSIVE (hero + scene)
+   ============================================================ */
+@media (max-width: 900px) {
+  .hero { padding: 160px 1.2rem 110px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .hero-text { order: -1; }
+  .hero-fairy { width: clamp(220px, 60vw, 340px); }
+}
+
+@media (max-width: 520px) {
+  .hero-title { font-size: 2.3rem; }
+  .hero-tagline { min-height: 6em; }
+}
+
+/* ---------- 10. REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+
+/* ============================================================
+   15. HERO EXTRAS (scroll hint after the spell)
+   ============================================================ */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(84px, 11vw, 140px);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 3px var(--glow-yellow), 0 0 22px rgba(255, 210, 63, 0.8);
+  font-family: var(--font-title);
+  font-weight: 800;
+  color: var(--ink);
+  visibility: hidden;
+  transform: translateX(-50%);
+}
+.scroll-hint b { font-size: 1.3rem; line-height: 1; }
+
+/* scene wave into the stories section */
+.scene-wave {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  z-index: 2;
+  width: 100%;
+  height: clamp(50px, 8vw, 110px);
+  display: block;
+}
+
+/* ============================================================
+   16. STORIES (navy gradient, hanging lights, glowing cards)
+   ============================================================ */
+.stories {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem clamp(1rem, 4vw, 3rem) 8rem;
+  background:
+    radial-gradient(55% 38% at 12% 18%, rgba(255, 111, 181, 0.22), transparent 70%),
+    radial-gradient(55% 42% at 88% 62%, rgba(94, 231, 255, 0.2), transparent 70%),
+    radial-gradient(60% 40% at 45% 100%, rgba(179, 136, 255, 0.28), transparent 70%),
+    linear-gradient(180deg, #1b1540 0%, #2a1a6e 34%, #1d3b86 70%, #1b1540 100%);
+}
+
+.stories-stars { position: absolute; inset: 0; pointer-events: none; }
+.tw-star { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8); }
+
+.stories-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; text-align: center; }
+
+.stories-title {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 0.6rem;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+  line-height: 1.1;
+  background: var(--g-rainbow);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 14px rgba(255, 158, 94, 0.45));
+  animation: shimmer 9s linear infinite;
+}
+
+.stories-sub {
+  max-width: 36ch;
+  margin: 0 auto 2.2rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  color: #e6dcff;
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 3vw, 2.4rem);
+  align-items: start;
+}
+
+.card-col { display: flex; flex-direction: column; align-items: center; perspective: 900px; }
+
+/* the lights picture is a square with empty space around it: crop to the visible strip */
+.garland-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 334 / 127;
+  overflow: hidden;
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 0 10px rgba(255, 240, 163, 0.55));
+}
+.garland {
+  position: absolute;
+  width: 104.8%;
+  left: -2.4%;
+  top: -82.7%;
+  max-width: none;
+  height: auto;
+  animation: garland-glow 3.4s ease-in-out infinite;
+}
+@keyframes garland-glow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.25) saturate(1.2); } }
+
+.card-hang { position: relative; width: 84%; padding-top: 52px; transform-origin: 50% 0; will-change: transform; }
+
+.card-string {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 2px;
+  height: 62px;
+  border-radius: 2px;
+  background: linear-gradient(#fff, rgba(255, 255, 255, 0.35));
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  transform-origin: 50% 0;
+}
+.card-string-l { transform: rotate(17deg); }
+.card-string-r { transform: rotate(-17deg); }
+
+.story-card {
+  --c: var(--glow-pink);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 14px 14px 20px;
+  border: 4px solid transparent;
+  border-radius: 30px;
+  background: linear-gradient(#2a2064, #1e1650) padding-box, var(--g-rainbow) border-box;
+  background-size: 100% 100%, 200% 100%;
+  box-shadow: 0 0 22px -2px var(--c), 0 18px 30px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  animation: neon-border 6s linear infinite, card-pulse 3s ease-in-out infinite;
+}
+.card-pink   { --c: var(--glow-pink); }
+.card-mint   { --c: var(--glow-mint); animation-delay: -2s, -1s; }
+.card-purple { --c: var(--glow-purple); animation-delay: -4s, -2s; }
+
+@keyframes card-pulse {
+  0%, 100% { box-shadow: 0 0 18px -2px var(--c), 0 18px 30px rgba(0, 0, 0, 0.35); }
+  50%      { box-shadow: 0 0 34px 2px var(--c), 0 18px 30px rgba(0, 0, 0, 0.35); }
+}
+
+/* shiny sweep that runs across the card on hover */
+.story-card::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -70%;
+  width: 40%;
+  height: 140%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+.story-card:hover::after { left: 130%; transition: left 0.8s ease; }
+.story-card:hover { animation-play-state: paused, paused; box-shadow: 0 0 46px 6px var(--c), 0 0 100px var(--c), 0 18px 30px rgba(0, 0, 0, 0.35); }
+
+.card-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.35), transparent 45%), linear-gradient(135deg, var(--c), #3a2a8f);
+}
+.card-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.story-card:hover .card-art img { transform: scale(1.1); }
+.card-art-icon { font-size: 4.5rem; color: #fff; text-shadow: 0 0 18px #fff, 0 0 40px var(--c); animation: twinkle-icon 2.4s ease-in-out infinite; }
+@keyframes twinkle-icon { 0%, 100% { transform: scale(0.9) rotate(-8deg); opacity: 0.8; } 50% { transform: scale(1.15) rotate(8deg); opacity: 1; } }
+
+.card-title { margin: 0.3rem 0 0; font-family: var(--font-title); font-weight: 800; font-size: clamp(1.3rem, 2vw, 1.7rem); color: #fff; text-shadow: 0 0 14px var(--c); }
+.card-desc { margin: 0; font-size: 0.98rem; line-height: 1.45; color: rgba(255, 255, 255, 0.82); }
+
+.card-btn {
+  align-self: center;
+  margin-top: 0.3rem;
+  padding: 0.55rem 1.5rem;
+  border-radius: 999px;
+  background: var(--g-candy);
+  box-shadow: 0 0 14px var(--c);
+  font-family: var(--font-title);
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card-btn:hover { transform: scale(1.1); box-shadow: 0 0 26px var(--c); }
+
+/* ============================================================
+   17. STORY CLUB (hero-like sky, balloon + clouds in the back)
+   ============================================================ */
+.club {
+  position: relative;
+  min-height: 115vh;
+  padding: clamp(7rem, 12vw, 10rem) clamp(1rem, 5vw, 4rem) clamp(7rem, 12vw, 10rem);
+  overflow: hidden;
+  background: linear-gradient(180deg, #bfe3ff 0%, #e4ddff 48%, #ffe3f3 100%);
+}
+
+/* wave from the navy section above */
+.club::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: clamp(50px, 8vw, 110px);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1440 V50 C1200,110 960,10 720,60 C480,110 240,10 0,70 Z' fill='%231b1540'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+.club-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(40% 30% at 15% 25%, rgba(255, 214, 236, 0.9), transparent 70%),
+    radial-gradient(40% 30% at 85% 60%, rgba(211, 230, 255, 0.9), transparent 70%),
+    radial-gradient(35% 25% at 50% 95%, rgba(255, 243, 184, 0.8), transparent 70%);
+}
+
+.club-sky { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+
+.club-balloon {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: clamp(150px, 20vw, 300px);
+  height: auto;
+  opacity: 0;
+  filter: drop-shadow(0 14px 18px rgba(80, 100, 180, 0.25));
+  will-change: transform, opacity;
+}
+
+.club-cloud { position: absolute; left: 0; height: auto; will-change: transform; }
+.club-cloud-a { top: 5%;  width: clamp(130px, 17vw, 250px); opacity: 0.95; }
+.club-cloud-b { top: 27%; width: clamp(150px, 19vw, 280px); opacity: 0.95; }
+
+.club-inner { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; text-align: center; }
+
+.club-title {
+  margin: 0 0 1rem;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  line-height: 1.05;
+}
+.cword {
+  display: inline-block;
+  color: var(--w);
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.14em #fff;
+  text-shadow: 0 0.06em 0 rgba(53, 32, 95, 0.3);
+}
+.cword:nth-child(1) { --w: #ff5fa8; }
+.cword:nth-child(2) { --w: #ff8a3d; }
+.cword:nth-child(3) { --w: #3f8cff; }
+.cword:nth-child(4) { --w: #17c48a; }
+
+.club-tagline {
+  max-width: 32ch;
+  margin: 0 auto 2.6rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.club-perks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin: 0;
+  padding: 0 0 clamp(2.6rem, 4vw, 3.6rem); /* the gap below the cards is PADDING, which never collapses or overlaps */
+  list-style: none;
+}
+.perk {
+  --pc: #ff9ecb;
+  padding: 1.6rem 1.3rem 1.5rem;
+  border: 4px solid #fff;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 0 var(--pc), 0 18px 28px rgba(80, 60, 160, 0.18);
+  color: var(--ink);
+  transition: transform 0.3s;
+}
+.perk { position: relative; z-index: 1; }
+.perk:hover { transform: translateY(-8px) rotate(-1.5deg); }
+.perk-pink   { --pc: #ff9ecb; }
+.perk-blue   { --pc: #8cc2ff; }
+.perk-yellow { --pc: #ffd75e; }
+.perk-icon { display: block; font-size: 3rem; line-height: 1; margin-bottom: 0.4rem; }
+.perk h3 { margin: 0 0 0.4rem; font-family: var(--font-title); font-weight: 800; font-size: 1.5rem; }
+.perk p { margin: 0; line-height: 1.5; }
+
+.club-meet { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin: 0 0 2.2rem; position: relative; z-index: 0; }
+.meet-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 6px 0 #d6c2ff;
+  color: var(--ink);
+}
+.meet-item b { font-family: var(--font-title); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9b6bff; }
+.meet-item span { font-weight: 700; }
+
+.club-cta {
+  display: inline-block;
+  padding: 1rem 2.6rem;
+  border-radius: 999px;
+  background: var(--g-rainbow);
+  background-size: 200% 100%;
+  box-shadow: 0 8px 0 rgba(53, 32, 95, 0.35), 0 0 26px rgba(255, 111, 181, 0.6);
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(53, 32, 95, 0.5);
+  text-decoration: none;
+  animation: shimmer 5s linear infinite;
+}
+.club-cta:hover { filter: brightness(1.08); }
+
+/* ============================================================
+   18. FOOTER (night shore + flowing water + boats)
+   ============================================================ */
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(6rem, 10vw, 8rem);
+  background: linear-gradient(180deg, #1b1540 0%, #251b6b 50%, #1d3f86 100%);
+  color: #fff;
+}
+.footer::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: clamp(50px, 8vw, 100px);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1440 V50 C1200,10 960,100 720,50 C480,0 240,90 0,40 Z' fill='%23ffe3f3'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+.footer-stars { position: absolute; inset: 0 0 40% 0; pointer-events: none; }
+
+.footer-moon {
+  position: absolute;
+  top: clamp(6rem, 9vw, 8rem);
+  right: clamp(1.5rem, 8vw, 8rem);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: -20px 10px 0 0 #fff3b0;
+  filter: drop-shadow(0 0 14px rgba(255, 243, 176, 0.9));
+  pointer-events: none;
+}
+
+.footer-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 clamp(1.2rem, 4vw, 2rem) 2.5rem;
+}
+
+.footer-brand p { max-width: 34ch; margin: 1rem 0 1.2rem; line-height: 1.55; color: #d9ccff; }
+
+.footer-social { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.footer-social a {
+  padding: 0.4rem 1rem;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#2a2064, #2a2064) padding-box, var(--g-rainbow) border-box;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.footer-social a:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 0 16px var(--glow-pink); }
+
+.footer-col { display: flex; flex-direction: column; }
+.footer-col h4 { margin: 0 0 0.7rem; font-family: var(--font-title); font-weight: 800; font-size: 1.3rem; color: var(--pastel-yellow); }
+.footer-col a { padding: 0.28rem 0; color: #d9ccff; text-decoration: none; transition: color 0.2s, transform 0.2s; }
+.footer-col a:hover { color: var(--glow-yellow); transform: translateX(6px); }
+
+/* the sea */
+.sea { position: relative; z-index: 2; height: clamp(210px, 26vw, 300px); }
+
+.wave { position: absolute; left: 0; bottom: 0; width: 200%; display: block; overflow: visible; will-change: transform; }
+.wave path { stroke: rgba(255, 255, 255, 0.6); stroke-width: 3; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.wave-back  { height: 100%; z-index: 1; }
+.wave-back path  { fill: #5cd0f2; }
+.wave-mid   { height: 78%;  z-index: 3; }
+.wave-mid path   { fill: #2f9fe3; }
+.wave-front { height: 52%;  z-index: 5; }
+.wave-front path { fill: #1c6cc4; }
+
+.boat-lane { position: absolute; inset: 0; pointer-events: none; }
+.boat-lane-far  { z-index: 2; }
+.boat-lane-near { z-index: 4; }
+
+.boat { position: absolute; left: 0; bottom: 0; will-change: transform; }
+.boat svg { display: block; width: 100%; height: auto; overflow: visible; transform-origin: 50% 90%; }
+
+.footer-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  z-index: 6;
+  margin: 0;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(10, 30, 80, 0.7);
+}
+
+/* ============================================================
+   19. RESPONSIVE (new sections)
+   ============================================================ */
+@media (max-width: 900px) {
+  .card-row { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .club-perks { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .footer-inner { grid-template-columns: 1fr; }
+  .club-cloud-a { top: 3%; }
+  .club-cloud-b { top: 17%; }
+  .footer-moon { width: 56px; height: 56px; box-shadow: -14px 7px 0 0 #fff3b0; }
+}
