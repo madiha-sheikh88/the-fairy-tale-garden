@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Story OF Journal</title>
+    <link rel="stylesheet" href="journal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+        integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo"><i class="fa-solid fa-star"></i> The Fairy <span>Tale Garden</span></a>
+        <div class="nav-links" id="navlinks">
+            <a href="#">Home</a>
+            <a href="#">Explore Stories</a>
+            <a href="#journal" class="active">Story Journal</a>
+            <a href="#">Join Club</a>
+        </div>
+
+        <a href="#newsletter" class="nav-btn">Join the magic</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Where Every Story <br> Leaves a little <span>Magic.</span></h1>
+
+            <p> A cozy corner for dreamers, readers, and storytellers.
+                Discover enchanting reviews, writing inspiration,
+                and secrets hidden between the pages.</p>
+
+            <a href="#journal" class="primary-btn">
+                Explore the Journal <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="hero-art">
+            <img src="images/img1.png" alt=" book">
+            <div class="floating-note note-one"><i class="fa-regular fa-star"></i> A little imagination</div>
+            <div class="floating-note note-two"><i class="fa-regular fa-heart"></i> Endless possibilities</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="intro" id="journal">
+            <div>
+                <h2>The Story <span>Journal</span></h2>
+                <p>Thoughtful reads and creative inspiration for every curious mind.</p>
+            </div>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" id="searchInput" placeholder="Search journal entries...">
+            </div>
+        </section>
+
+        <section class="filters">
+            <button class="filter-btn active" data-category="All">All Stories</button>
+            <button class="filter-btn active" data-category="Reviews">Book Reviews</button>
+            <button class="filter-btn active" data-category="Fantasy">Fantasy Worlds</button>
+            <button class="filter-btn active" data-category="Guides">Reading Guides</button>
+            <button class="filter-btn active" data-category="Writing">Writing Tips</button>
+        </section>
+
+        <section class="featured">
+            <div class="featured-image">
+                <img src="images/image.png" alt="Book and a dreamy reading atmosphere">
+                <span class="image-label">EDITOR'S PICK <i class="fa-solid fa-star-half-stroke"></i></span>
+            </div>
+
+            <div class="featured-content">
+                <h2>How to Find a Book That Feels Like Home</h2>
+                <p> Sometimes, the right story finds you at exactly the right
+                    moment. Discover how to choose your next unforgettable read.</p>
+
+                <div class="post-meta">
+                    <span><i class="fa-regular fa-calendar"></i>October 12, 2026</span>
+                    <span><i class="fa-regular fa-clock"></i> 5 min read</span>
+                </div>
+
+                <button class="read-btn" data-post="featured">Read the story <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <section class="latest">
+            <div class="section-heading">
+                <div>
+                    <h2>Latest <span>Entries</span></h2>
+                </div>
+                <p>Little discoveries for your next big adventure.</p>
+            </div>
+
+            <div class="blog-grid" id="blogGrid"></div>
+            <p class="empty-message" id="emptyMessage" hidden>No stories found. Try another search!</p>
+        </section>
+
+        <section class="writing-section">
+            <div class="writing-icon"><i class="fa-regular fa-pen-to-square"></i></div>
+
+            <h2>Your next story starts with <span>one idea.</span></h2>
+            <p>
+                Explore creative prompts, build unforgettable characters,
+                and turn the little ideas in your mind into magical stories.
+            </p>
+            <a href="#journal" class="outline-btn">Find Your Inspiration <i class="fa-solid fa-arrow-trend-up"></i></a>
+        </section>
+
+        <section class="newsletter" id="newsletter">
+            <div>
+                <h2>A little magic in your <span>inbox.</span></h2>
+                <p>Get reading recommendations, fresh articles, and creative prompts.</p>
+            </div>
+
+            <form id="newsletterForm">
+                <input type="email" id="emailInput"
+                    placeholder="Enter your email address" required>
+                <button type="submit">Subscribe <i class="fa-solid fa-star-half-stroke"></i></button>
+                <p id="newsletterMessage" aria-live="polite">
+                    Made for readers who believe in magic.
+                </p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <a href="#" class="logo"><i class="fa-solid fa-star"></i> The Fairy <span>Tale Garden</span></a>
+        <p>Every page is a doorway to another world.</p>
+        <div class="socials">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+        <small>© 2026 The Fairy Tale. Made with imagination <i class="fa-regular fa-heart"></i></small>
+    </footer>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/ScrollTrigger.min.js"></script>
+<script src="journal.js"></script>  
+</body>
+
+</html>
