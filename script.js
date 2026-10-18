@@ -703,7 +703,26 @@ const BOAT_COLOURS = [ // [hull, sail 1, sail 2, flag]
   ['#2fd4a4', '#fff7d6', '#ff9ecb', '#ff6fb5']
 ];
 
-function boatSVG(kind, c) { // returns the cartoon boat as SVG text
+function creditBoatSVG(c, k) { // a sailing boat with a flag + a hanging credit banner (k = page, name, bg, line, ink)
+  return `<svg viewBox="-10 -68 140 188"><g>
+    <line x1="60" y1="-62" x2="60" y2="90" stroke="#7a4a2b" stroke-width="4" stroke-linecap="round"/>
+    <path class="flag" d="M60,-64 L84,-57 L60,-50 Z" fill="${c[3]}"/>
+    <line x1="-8" y1="-52" x2="128" y2="-52" stroke="#7a4a2b" stroke-width="3" stroke-linecap="round"/>
+    <g class="banner">
+      <path d="M-4,-50 H124 V-4 L60,-14 L-4,-4 Z" fill="${k.bg}" stroke="${k.line}" stroke-width="2" stroke-linejoin="round"/>
+      <text class="banner-page" x="60" y="-37" text-anchor="middle" fill="${k.ink}">${k.page}</text>
+      <text class="banner-name" x="60" y="-22" text-anchor="middle">${k.name}</text>
+    </g>
+    <path class="sail" d="M57,16 L57,82 L18,82 Z" fill="${c[1]}" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+    <path class="sail" d="M64,26 L64,82 L98,82 Z" fill="${c[2]}" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M10,86 H110 L96,108 Q93,112 87,112 H33 Q27,112 24,108 Z" fill="${c[0]}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M14,92 H106" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="48" cy="99" r="2.8" fill="#35205f"/><circle cx="72" cy="99" r="2.8" fill="#35205f"/>
+    <path d="M53,102 Q60,108 67,102" fill="none" stroke="#35205f" stroke-width="2.4" stroke-linecap="round"/></g></svg>`;
+}
+
+function boatSVG(kind, c, credit) { // returns the cartoon boat as SVG text
+  if (kind === 'credit') return creditBoatSVG(c, credit); // the boats that carry the page credits
   if (kind === 'paper') { // a folded paper boat
     return `<svg viewBox="0 0 120 100"><g><path class="sail" d="M60,10 L60,64 L104,64 Z" fill="#fff"/><path class="sail" d="M60,20 L60,64 L20,64 Z" fill="#e6f0ff"/>
       <path d="M8,62 H112 L92,92 H28 Z" fill="#fff" stroke="#9fb7ff" stroke-width="3" stroke-linejoin="round"/><path d="M28,92 L40,62 M92,92 L80,62" stroke="#9fb7ff" stroke-width="2"/>
@@ -721,12 +740,12 @@ function boatSVG(kind, c) { // returns the cartoon boat as SVG text
     <path d="M53,102 Q60,108 67,102" fill="none" stroke="#35205f" stroke-width="2.4" stroke-linecap="round"/></g></svg>`;
 }
 
-function addBoat(laneId, kind, width, bottom, duration, colours, startAt) { // adds one boat and sails it left to right
+function addBoat(laneId, kind, width, bottom, duration, colours, startAt, credit) { // adds one boat and sails it left to right
   const el = document.createElement('div'); // wrapper for the boat
   el.className = 'boat'; // CSS class
   el.style.width = width + 'px'; // its size
   el.style.bottom = bottom + '%'; // how high it sits on the water
-  el.innerHTML = boatSVG(kind, colours); // draw it
+  el.innerHTML = boatSVG(kind, colours, credit); // draw it
   document.getElementById(laneId).appendChild(el); // put it on the water
   const svg = el.querySelector('svg'); // the drawing (it rocks)
   if (reduceMotion) { gsap.set(el, { x: startAt * (sea.clientWidth - width) }); return; } // static spot
@@ -740,6 +759,10 @@ function addBoat(laneId, kind, width, bottom, duration, colours, startAt) { // a
   const rock = gsap.fromTo(svg, { rotation: -gsap.utils.random(3, 6), y: 0 }, { rotation: gsap.utils.random(3, 6), y: gsap.utils.random(3, 8), duration: gsap.utils.random(1.4, 2.4), ease: 'sine.inOut', yoyo: true, repeat: -1, paused: true }); // rocking on the waves
   footerAnims.push(rock);
   if (sail.length) footerAnims.push(gsap.to(sail, { skewX: -5, transformOrigin: '50% 100%', duration: gsap.utils.random(0.9, 1.5), ease: 'sine.inOut', yoyo: true, repeat: -1, paused: true })); // sails flutter in the wind
+  if (kind === 'credit') { // credit boats: the flag and the banner wave in the wind too
+    footerAnims.push(gsap.fromTo(el.querySelector('.flag'), { skewY: -8 }, { skewY: 8, svgOrigin: '60 -57', duration: gsap.utils.random(0.5, 0.8), ease: 'sine.inOut', yoyo: true, repeat: -1, paused: true }));
+    footerAnims.push(gsap.fromTo(el.querySelector('.banner'), { skewX: -3 }, { skewX: 3, svgOrigin: '60 -52', duration: gsap.utils.random(1.2, 1.8), ease: 'sine.inOut', yoyo: true, repeat: -1, paused: true }));
+  }
 }
 
 const seaScale = Math.max(0.6, Math.min(1, window.innerWidth / 1200)); // smaller boats on phones
@@ -752,6 +775,16 @@ const seaScale = Math.max(0.6, Math.min(1, window.innerWidth / 1200)); // smalle
   ['laneNear', 'paper', 130, 28, 38, BOAT_COLOURS[4], 0.9],
   ['laneNear', 'sail', 140, 32, 31, BOAT_COLOURS[4], 0.4]
 ].forEach(([laneId, kind, width, bottom, secs, colours, start]) => addBoat(laneId, kind, Math.round(width * seaScale), bottom, secs, colours, start)); // build all the boats
+
+/* the three credit boats: who made which page (added last so they sail in front) */
+const CREDIT_BOATS = [ // [page, name, [hull, sail 1, sail 2, flag], banner fill, banner edge, page-label colour, bottom %, start progress]
+  ['Home page',    'Madiha Sheikh', ['#ff6fb5', '#fff7d6', '#ffd23f', '#ff9e5e'], '#fff7d6', '#ff6fb5', '#d6447f', 29, 0.10],
+  ['Story page',   'Sana Ghazi',    ['#7aa2ff', '#ffffff', '#ffb7da', '#ff6fb5'], '#ffffff', '#7aa2ff', '#3b5fc4', 27, 0.43],
+  ['Journal page', 'Ashna Fatima',  ['#b388ff', '#ffffff', '#5ee7ff', '#ffe066'], '#e9ddff', '#b388ff', '#6a43b5', 30, 0.76]
+];
+const creditWidth = Math.round(Math.max(120, 150 * seaScale)); // never smaller than 120px so the names stay readable
+CREDIT_BOATS.forEach(([page, name, colours, bg, line, ink, bottom, start]) =>
+  addBoat('laneNear', 'credit', creditWidth, bottom, 42, colours, start, { page, name, bg, line, ink })); // same speed = they never bunch up
 
 if (!reduceMotion) {
   [['.wave-back', 24, 5], ['.wave-mid', 17, 7], ['.wave-front', 12, 6]].forEach(([sel, secs, bob]) => { // three water layers

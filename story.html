@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1b1540">
+  <title>The Fairy Tale Garden | Magical Stories</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="story.css">
+</head>
+<body>
+
+  <main>
+ 
+    <section class="stories-section" id="stories">
+      <div class="section-heading">
+        <span class="eyebrow">YOUR NEXT ADVENTURE STARTS HERE</span>
+        <h2>The Fairy-Tale Garden <span>Explore Stories...</span></h2>
+        <p>Pick a story, open its magical pages, and let your imagination fly.</p>
+          <div class="moon"></div>
+        <div class="hero-orb orb-one"></div>
+        <div class="hero-orb orb-two"></div>
+        <div class="hero-emoji"><img src="images/move.png" alt="Fairy" width="300" height="300"></div>
+         <div class="floating-star star-a">✦</div>
+        <div class="floating-star star-b">✧</div>
+        <div class="floating-star star-c">✦</div>
+      </div>
+      </div>
+
+
+
+      <div class="story-grid" id="storyGrid">
+        <!-- JavaScript yahan 8 story cards add karega -->
+      </div>
+
+      <p class="end-note">✧ And every ending is a brand-new beginning. ✧</p>
+    </section>
+  </main>
+
+  <!-- Story popup -->
+  <div class="modal-overlay" id="storyModal" aria-hidden="true">
+    <div class="story-modal" role="dialog" aria-modal="true"
+         aria-labelledby="modalTitle">
+
+      <button class="modal-close" id="modalClose"
+              aria-label="Close story">✕</button>
+
+      <div class="modal-decoration">✦ ✧ ✦</div>
+      <span class="modal-label">✧ YOUR MAGICAL STORY ✧</span>
+
+      <h2 id="modalTitle">Once Upon a Time</h2>
+
+      <div class="modal-divider"><span>❋</span></div>
+
+      <div class="modal-story" id="modalStory"></div>
+
+      <div class="moral-box">
+
+        <span class="moral-icon"></span>
+        <div>
+          <h3>The Little Lesson</h3>
+          <p id="modalMoral"></p>
+        </div>
+      </div>
+
+      <button class="modal-done" id="modalDone">
+        Back to the Garden ✨
+      </button>sss
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+  <script src="story.js"></script>
+</body>
+</html>
+
