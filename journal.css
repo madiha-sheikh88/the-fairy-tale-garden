@@ -598,6 +598,24 @@ footer small {
     font-size: 10px;
 }
 
+.back-top {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 18px;
+    margin-left: 45%;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--glow-purple);
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.back-top:hover {
+    color: var(--glow-pink);
+    border-color: var(--glow-pink);
+    transform: translateY(-3px);
+}
 
 
 
